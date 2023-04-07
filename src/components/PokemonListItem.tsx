@@ -8,11 +8,17 @@ interface PokemonListItemProps {
 
 export default function PokemonListItem({ pokemon }: PokemonListItemProps) {
     return (
-        <li className='flex items-center'>
-            <Image src={pokemon.imageUrl} alt={pokemon.name} width={20} height={20}/>
+        <div className="bg-white shadow-md rounded p-4 mx-2 my-4 w-64 text-center">
             <Link href={`/pokemon/${pokemon.name}`}>
-                {pokemon.name}
+                <Image
+                    src={pokemon.imageUrl}
+                    alt={pokemon.name}
+                    width={80}
+                    height={80}
+                    className='mx-auto mb-2' 
+                />
+                <h2 className="text-xl font-semibold capitalize">{pokemon.name}</h2>
             </Link>
-        </li>
+        </div>
     );
 }

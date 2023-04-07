@@ -1,7 +1,7 @@
-import { QueryClientProvider, QueryClient, Hydrate } from 'react-query';
 import type { AppProps } from 'next/app';
 import { Montserrat } from 'next/font/google'
 import '@/styles/globals.css';
+import Header from '@/components/Header';
 
 const montserrat = Montserrat({
   weight: ['400', '500', '600', '700'],
@@ -10,17 +10,15 @@ const montserrat = Montserrat({
   variable: '--font-montserrat',
 });
 
-const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <main className={`${montserrat.variable} font-sans`}>
+    <div className={`${montserrat.variable} font-sans`}>
+        <Header/>
+        <main className="container mx-auto">
           <Component {...pageProps} />
         </main>
-      </Hydrate>
-    </QueryClientProvider>
+    </div>
   );
 }
 

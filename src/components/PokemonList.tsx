@@ -1,35 +1,19 @@
-import { useQuery } from 'react-query';
-import PokemonListItem from './PokemonListItem';
+// components/PokemonList.tsx
 import { Pokemon } from '@/lib/types';
+import PokemonListItem from './PokemonListItem';
 
-const fetchPokemon = async () => {
-    const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
-    const data = await res.json();
-
-    const pokemonsWithImages = data.results.map((pokemon: Pokemon) => {
-        if(!pokemon.url) return pokemon;
-        const id = parseInt(pokemon.url.split('/')[6]);
-        const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-        return { ...pokemon, imageUrl };
-    });
-
-    return { ...data, results: pokemonsWithImages };
+type Props = {
+  pokemons: Pokemon[];
 };
 
-
-export default function PokemonList() {
-    const { isLoading, error, data } = useQuery('pokemon', fetchPokemon);
-
-    if (isLoading) return <h2>Loading...</h2>;
-
-    if (error) return <h2>Error...</h2>;
-
-    if (!data) return <h2>No data</h2>;
-    return (
-        <ul>
-            {data.results.map((pokemon: Pokemon) => (
-                <PokemonListItem key={pokemon.name} pokemon={pokemon} />
-            ))}
-        </ul>
-    )
-};
+export default function PokemonList({ pokemons }: Props) {
+  return (
+<div className="container mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 justify-items-center">
+      {pokemons.map((pokemon) => (
+        <PokemonListItem key={pokemon.name} pokemon={pokemon} />
+      ))}
+    </div>
+  </div>
+  );
+}
